@@ -5,25 +5,24 @@
 }: let
   lib = nixpkgs.lib;
   hosts = builtins.readDir ../hosts;
-  _genSystem = {
-    name,
-  }: let
+  host = import ../hosts/laptop/laptop.nix;
+
+  _genSystem = {name}: let
     host = import ../hosts/${name}/${name}.nix;
-    system = host.architecture;
-    configuration = host.configuration;
-    hardwareConfiguration = host.hardwareConfiguration;
-  in {
-    "${name}" = nixpkgs.lib.nixosSystem {
-      system = "${system}";
+  in
+    nixpkgs.lib.nixosSystem {
+      system = host.meta.architecture;
       modules = [
-        # home-manager.nixosModules.home-manager
-        # configuration
-        # hardwareConfiguration
+        host.configuration
+        (
+          if host.meta.home-manager
+          then inputs.home-manager.nixosModules.home-manager
+          else {}
+        )
         {networking.hostName = name;}
       ];
       specialArgs = {inherit inputs;};
     };
-  };
 in {
-  generateSystems = lib.mapAttrs (name: _: _genSystem {inherit name;}) hosts;
+  generateSystems = lib.mapAttrs (name: _: (_genSystem {inherit name;})) hosts;
 }
