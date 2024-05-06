@@ -2,8 +2,8 @@
   config,
   lib,
   ...
-}: with lib; {
-
+}:
+with lib; {
   options = {
     modules.programs.zsh.enable = mkEnableOption "Enabel zsh";
   };

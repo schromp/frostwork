@@ -6,7 +6,7 @@
 }: {
   # Frostwork sets the hostname equal to the folder name of the host
   # To override the hostname uncomment the line below and set the hostname
-  # networking.hostName = pkgs.lib.mkForce "nixos";
+  # networking.hostName = pkgs.lib.mkForce "hostname";
 
   # Setup the user
   users.users.root.initialPassword = "1234";

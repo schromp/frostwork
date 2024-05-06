@@ -17,7 +17,9 @@
     frostwork = import ./frostwork {inherit nixpkgs inputs;};
   in {
     # For testing purposes this is exposed here
-    nixosConfigurations = frostwork.generateSystems;
+    nixosConfigurations = frostwork.generateNixosSystems {inherit inputs nixpkgs;};
+
+    homeConfigurations = frostwork.generateHMSystems {inherit inputs nixpkgs;};
 
     lib = import ./frostwork;
   };

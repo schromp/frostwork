@@ -2,6 +2,9 @@
   meta = {
     architecture = "x86_64-linux";
     home-manager = true;
+    users = [
+      "bob"
+    ];
   };
 
   configuration = {
